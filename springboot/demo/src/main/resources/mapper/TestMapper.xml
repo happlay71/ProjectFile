@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="UTF-8"?>  <!--声明是一个XML文档，使用UTF-8编码-->
+<!--指定了 XML 文件所使用的 DTD（文档类型定义-->
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<!--这个元素定义了一个 MyBatis Mapper 文件。namespace 属性指定了该 Mapper 文件所属的命名空间，
+通常是相应的 Java Mapper 接口类的全限定名。这个命名空间用于与 Java 代码中的 Mapper 接口相对应，从而实现 SQL 语句到 Java 方法的映射-->
+<mapper namespace="happlay.mapper.UserMapper">
+    <!--sql语句-->
+    <select id="selectById" resultType="happlay.entity.User" parameterType="int">
+        select * from usertest where id=#{id}
+    </select>
+
+    <select id="selectByUserName" resultType="happlay.entity.User" parameterType="string">
+        select * from usertest where username=#{username}
+    </select>
+
+    <!--这告诉MyBatis使用数据库生成的键值（通常是auto_increment的值）作为主键值。-->
+    <!--keyProperty="id": 这个属性定义了哪个 Java 对象的属性将会接收自动生成的主键值。-->
+    <insert id="insertUser" useGeneratedKeys="true" keyProperty="id" parameterType="happlay.entity.User">
+        insert into usertest (username, password) values (#{username}, #{password})
+    </insert>
+
+    <delete id="deleteUser" parameterType="string">
+        delete from usertest where username=#{username}
+    </delete>
+
+    <update id="updateUser" parameterType="map">
+        update usertest set username=#{user.username}, password=#{user.password} where username=#{oldusername}
+    </update>
+</mapper>

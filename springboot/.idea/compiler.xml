@@ -14,10 +14,12 @@
         <module name="demo" />
         <module name="easyjava" />
         <module name="web_start" />
+        <module name="reggie" />
       </profile>
     </annotationProcessing>
     <bytecodeTargetLevel>
       <module name="easyJava" target="1.8" />
+      <module name="mybatis-start" target="1.8" />
     </bytecodeTargetLevel>
   </component>
   <component name="JavacSettings">

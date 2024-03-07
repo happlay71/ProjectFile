@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    <script type="text/javascript">
+        /* 从java过来一个json格式的字符串 */
+        var fromJava = '{"total": 2, "students": [{"name": "张三", "age": 20}, {"name": "李四", "age": 22}]}';
+
+        window.onload = function() {
+            document.getElementById("displaybtn").onclick = function() {
+                // 转换json对象
+                window.eval("var json = " + fromJava)
+                // 设置总记录条数
+                document.getElementById("totalSpan").innerHTML = json.total;
+                // 拼接HTML
+                var studentArray = json.students
+                var html = ""
+                for (var i = 0; i < studentArray.length; i++) {
+                    var s = studentArray[i]
+                    html += "<tr>"
+                    html += "<td>" + (i + 1) + "</td>"
+                    html += "<td>" + s.name + "</td>"
+                    html += "<td>" + s.age + "</td>"
+                    html += "</tr>"
+                }
+                document.getElementById("stutbody").innerHTML = html
+            }
+        }
+    </script>
+
+    <input type="button" value="查看学生信息列表" id="displaybtn" />
+    <hr>  
+    <table border="1px" width="40%">
+        <tr>
+            <th>序号</th>
+            <th>学生姓名</th>
+            <th>学生年龄</th>
+        </tr>
+        <tbody id="stutbody">
+            <!-- <tr>
+                <td>1</td>
+                <td>张三</td>
+                <td>20</td>
+            </tr>
+            <tr>
+                <td>2</td>
+                <td>李四</td>
+                <td>22</td>
+            </tr> -->
+        </tbody>
+    </table>
+    总记录条数：<span id="totalSpan">0</span>条
+</body>
+</html>

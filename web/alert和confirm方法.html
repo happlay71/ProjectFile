@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    <script type="text/javascript">
+        function sayHello() {
+            // 弹出消息框
+            window.alert("hello world");
+        }
+
+        function del() {
+            // 删除数据前一定要提示用户
+            // 确认框
+            var ok = window.confirm("你敢删吗？！");
+            // console.log(ok)
+            if (ok) {
+                alert("好好好，干得漂亮！")
+            }
+        }
+    </script>
+
+    <input type="button" value="hello" onclick="sayHello()" />
+
+    <input type="button" value="删除" onclick="del()" />
+</body>
+</html>

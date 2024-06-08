@@ -1,0 +1,85 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>查询</title>
+    <!-- 引入Bootstrap样式 -->
+    <link href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" rel="stylesheet">
+    <!-- 引入jQuery库 -->
+    <script src="https://code.jquery.com/jquery-3.5.1.min.js"></script>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 0;
+            padding: 0;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            background-color: #f0f0f0;
+            background-image: url("/static/img/白云.jpg"), url("/static/img/xgkx_blue2.png");
+            background-size: cover; 
+        }
+        .new-image {
+            position: absolute; /* 让新图片相对于容器进行绝对定位 */
+            bottom: 0; /* 将新图片粘贴到容器底部 */
+            left: 45%; /* 可以根据需要设置新图片的水平位置 */
+            width: 10%; /* 设置新图片的宽度占据整个容器 */
+            z-index: 1; /* 确保新图片位于旧图片上方 */
+        }
+        .login-container {
+            width: 300px;
+            padding: 20px;
+            border: 1px solid #ccc;
+            background-color: #fff;
+            border-radius: 5px;
+            box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+        }
+        .login-container h2 {
+            margin-top: 0;
+            margin-bottom: 20px;
+            text-align: center;
+        }
+        .login-container input[type="text"],
+        .login-container input[type="password"] {
+            width: 100%;
+            padding: 10px;
+            margin-bottom: 10px;
+            border: 1px solid #ccc;
+            border-radius: 3px;
+            box-sizing: border-box;
+        }
+        .login-container input[type="submit"] {
+            width: 100%;
+            padding: 10px;
+            background-color: #007bff;
+            color: #fff;
+            border: none;
+            border-radius: 3px;
+            cursor: pointer;
+            transition: background-color 0.3s;
+        }
+        .login-container input[type="submit"]:hover {
+            background-color: #0056b3;
+        }
+    </style>
+</head>
+<body>
+    <div class="login-container">
+        <form action="" method="post">
+            {% csrf_token %}
+            学号：<input type="text" name="username" placeholder="Username" required><br>
+            密码：<input type="password" name="password" placeholder="Password" required><br>
+            <input type="submit" value="查询">
+        </form>
+        <img src="/static/img/xgkx_blue2.png" alt="New Image" class="new-image">
+    </div>
+
+    {% if error_message %}
+    <script>
+        alert("{{ error_message }}");
+    </script>
+    {% endif %}
+</body>
+</html>

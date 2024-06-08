@@ -1,0 +1,178 @@
+*** Starting uWSGI 2.0.24 (64bit) on [Sat Mar 16 18:16:17 2024] ***
+compiled with version: 11.4.0 on 16 March 2024 10:13:36
+os: Linux-6.5.0-25-generic #25~22.04.1-Ubuntu SMP PREEMPT_DYNAMIC Tue Feb 20 16:09:15 UTC 2
+nodename: quyang-virtual-machine
+machine: x86_64
+clock source: unix
+pcre jit disabled
+detected number of CPU cores: 2
+current working directory: /mnt/hgfs/Communist/Communist
+writing pidfile to uwsgi.pid
+detected binary path: /home/quyang/Python-3.10.11/django/bin/uwsgi
+chdir() to /mnt/hgfs/Communist
+your processes number limit is 7390
+your memory page size is 4096 bytes
+detected max file descriptor number: 1048576
+lock engine: pthread robust mutexes
+thunder lock: disabled (you can enable it with --thunder-lock)
+probably another instance of uWSGI is running on the same address (127.0.0.1:8000).
+bind(): Address already in use [core/socket.c line 769]
+*** Starting uWSGI 2.0.24 (64bit) on [Sat Mar 16 18:21:15 2024] ***
+compiled with version: 11.4.0 on 16 March 2024 10:13:36
+os: Linux-6.5.0-25-generic #25~22.04.1-Ubuntu SMP PREEMPT_DYNAMIC Tue Feb 20 16:09:15 UTC 2
+nodename: quyang-virtual-machine
+machine: x86_64
+clock source: unix
+pcre jit disabled
+detected number of CPU cores: 2
+current working directory: /mnt/hgfs/Communist/Communist
+writing pidfile to uwsgi.pid
+detected binary path: /home/quyang/Python-3.10.11/django/bin/uwsgi
+chdir() to /mnt/hgfs/Communist
+your processes number limit is 7390
+your memory page size is 4096 bytes
+detected max file descriptor number: 1048576
+lock engine: pthread robust mutexes
+thunder lock: disabled (you can enable it with --thunder-lock)
+uWSGI http bound on 127.0.0.1:8000 fd 4
+uwsgi socket 0 bound to TCP address 127.0.0.1:35889 (port auto-assigned) fd 3
+Python version: 3.10.12 (main, Nov 20 2023, 15:14:05) [GCC 11.4.0]
+Python main interpreter initialized at 0x5cb174b205c0
+python threads support enabled
+your server socket listen backlog is limited to 100 connections
+your mercy for graceful operations on workers is 60 seconds
+mapped 166752 bytes (162 KB) for 2 cores
+*** Operational MODE: threaded ***
+WSGI app 0 (mountpoint='') ready in 3 seconds on interpreter 0x5cb174b205c0 pid: 12434 (default app)
+*** uWSGI is running in multiple interpreter mode ***
+spawned uWSGI master process (pid: 12434)
+spawned uWSGI worker 1 (pid: 12443, cores: 2)
+spawned uWSGI http 1 (pid: 12444)
+[pid: 12443|app: 0|req: 1/1] 127.0.0.1 () {44 vars in 764 bytes} [Sat Mar 16 18:21:32 2024] GET /login => generated 143 bytes in 469 msecs (HTTP/1.1 400) 4 headers in 172 bytes (1 switches on core 0)
+[pid: 12443|app: 0|req: 2/2] 127.0.0.1 () {44 vars in 766 bytes} [Sat Mar 16 18:21:39 2024] GET /login/ => generated 143 bytes in 86 msecs (HTTP/1.1 400) 4 headers in 172 bytes (1 switches on core 1)
+SIGINT/SIGTERM received...killing workers...
+gateway "uWSGI http 1" has been buried (pid: 12444)
+worker 1 buried after 1 seconds
+goodbye to uWSGI.
+*** Starting uWSGI 2.0.24 (64bit) on [Sat Mar 16 18:22:50 2024] ***
+compiled with version: 11.4.0 on 16 March 2024 10:13:36
+os: Linux-6.5.0-25-generic #25~22.04.1-Ubuntu SMP PREEMPT_DYNAMIC Tue Feb 20 16:09:15 UTC 2
+nodename: quyang-virtual-machine
+machine: x86_64
+clock source: unix
+pcre jit disabled
+detected number of CPU cores: 2
+current working directory: /mnt/hgfs/Communist/Communist
+writing pidfile to uwsgi.pid
+detected binary path: /home/quyang/Python-3.10.11/django/bin/uwsgi
+chdir() to /mnt/hgfs/Communist
+your processes number limit is 7390
+your memory page size is 4096 bytes
+detected max file descriptor number: 1048576
+lock engine: pthread robust mutexes
+thunder lock: disabled (you can enable it with --thunder-lock)
+uWSGI http bound on 127.0.0.1:8000 fd 4
+uwsgi socket 0 bound to TCP address 127.0.0.1:44507 (port auto-assigned) fd 3
+Python version: 3.10.12 (main, Nov 20 2023, 15:14:05) [GCC 11.4.0]
+Python main interpreter initialized at 0x642fc14835c0
+python threads support enabled
+your server socket listen backlog is limited to 100 connections
+your mercy for graceful operations on workers is 60 seconds
+mapped 166752 bytes (162 KB) for 2 cores
+*** Operational MODE: threaded ***
+WSGI app 0 (mountpoint='') ready in 3 seconds on interpreter 0x642fc14835c0 pid: 12536 (default app)
+*** uWSGI is running in multiple interpreter mode ***
+spawned uWSGI master process (pid: 12536)
+spawned uWSGI worker 1 (pid: 12553, cores: 2)
+spawned uWSGI http 1 (pid: 12554)
+[pid: 12553|app: 0|req: 1/1] 127.0.0.1 () {44 vars in 767 bytes} [Sat Mar 16 18:23:22 2024] GET /login/ => generated 143 bytes in 473 msecs (HTTP/1.1 400) 4 headers in 172 bytes (1 switches on core 0)
+[pid: 12553|app: 0|req: 2/2] 127.0.0.1 () {44 vars in 765 bytes} [Sat Mar 16 18:23:26 2024] GET /login => generated 143 bytes in 81 msecs (HTTP/1.1 400) 4 headers in 172 bytes (1 switches on core 1)
+[pid: 12553|app: 0|req: 3/3] 127.0.0.1 () {46 vars in 868 bytes} [Sat Mar 16 18:23:31 2024] GET /login/ => generated 143 bytes in 59 msecs (HTTP/1.1 400) 4 headers in 172 bytes (1 switches on core 0)
+[pid: 12553|app: 0|req: 4/4] 127.0.0.1 () {46 vars in 866 bytes} [Sat Mar 16 18:25:08 2024] GET /login => generated 143 bytes in 82 msecs (HTTP/1.1 400) 4 headers in 172 bytes (1 switches on core 1)
+[pid: 12553|app: 0|req: 5/5] 127.0.0.1 () {46 vars in 866 bytes} [Sat Mar 16 18:25:54 2024] GET /login/ => generated 143 bytes in 67 msecs (HTTP/1.1 400) 4 headers in 172 bytes (1 switches on core 0)
+SIGINT/SIGTERM received...killing workers...
+gateway "uWSGI http 1" has been buried (pid: 12554)
+worker 1 buried after 1 seconds
+goodbye to uWSGI.
+*** Starting uWSGI 2.0.24 (64bit) on [Sat Mar 16 18:27:44 2024] ***
+compiled with version: 11.4.0 on 16 March 2024 10:13:36
+os: Linux-6.5.0-25-generic #25~22.04.1-Ubuntu SMP PREEMPT_DYNAMIC Tue Feb 20 16:09:15 UTC 2
+nodename: quyang-virtual-machine
+machine: x86_64
+clock source: unix
+pcre jit disabled
+detected number of CPU cores: 2
+current working directory: /mnt/hgfs/Communist/Communist
+writing pidfile to uwsgi.pid
+detected binary path: /home/quyang/Python-3.10.11/django/bin/uwsgi
+chdir() to /mnt/hgfs/Communist
+your processes number limit is 7390
+your memory page size is 4096 bytes
+detected max file descriptor number: 1048576
+lock engine: pthread robust mutexes
+thunder lock: disabled (you can enable it with --thunder-lock)
+uWSGI http bound on 127.0.0.1:8000 fd 4
+uwsgi socket 0 bound to TCP address 127.0.0.1:36841 (port auto-assigned) fd 3
+Python version: 3.10.12 (main, Nov 20 2023, 15:14:05) [GCC 11.4.0]
+Python main interpreter initialized at 0x5b6f937965c0
+python threads support enabled
+your server socket listen backlog is limited to 100 connections
+your mercy for graceful operations on workers is 60 seconds
+mapped 166752 bytes (162 KB) for 2 cores
+*** Operational MODE: threaded ***
+WSGI app 0 (mountpoint='') ready in 3 seconds on interpreter 0x5b6f937965c0 pid: 12686 (default app)
+*** uWSGI is running in multiple interpreter mode ***
+spawned uWSGI master process (pid: 12686)
+spawned uWSGI worker 1 (pid: 12696, cores: 2)
+spawned uWSGI http 1 (pid: 12697)
+[pid: 12696|app: 0|req: 1/1] 127.0.0.1 () {46 vars in 867 bytes} [Sat Mar 16 18:27:57 2024] GET /login/ => generated 2918 bytes in 1746 msecs (HTTP/1.1 200) 8 headers in 358 bytes (1 switches on core 0)
+[pid: 12696|app: 0|req: 2/2] 127.0.0.1 () {46 vars in 888 bytes} [Sat Mar 16 18:31:01 2024] GET /static/img/xgkx_blue2.png => generated 179 bytes in 28 msecs (HTTP/1.1 404) 6 headers in 214 bytes (1 switches on core 1)
+[pid: 12696|app: 0|req: 3/3] 127.0.0.1 () {46 vars in 892 bytes} [Sat Mar 16 18:31:01 2024] GET /static/img/%E7%99%BD%E4%BA%91.jpg => generated 179 bytes in 4 msecs (HTTP/1.1 404) 6 headers in 214 bytes (1 switches on core 0)
+[pid: 12696|app: 0|req: 4/4] 127.0.0.1 () {54 vars in 1025 bytes} [Sat Mar 16 18:31:26 2024] POST /login/ => generated 1744 bytes in 485 msecs (HTTP/1.1 200) 8 headers in 367 bytes (1 switches on core 0)
+[pid: 12696|app: 0|req: 5/5] 127.0.0.1 () {44 vars in 833 bytes} [Sat Mar 16 18:31:27 2024] GET /static/img/xgkx_blue2.png => generated 179 bytes in 3 msecs (HTTP/1.1 404) 6 headers in 214 bytes (1 switches on core 1)
+[pid: 12696|app: 0|req: 6/6] 127.0.0.1 () {44 vars in 837 bytes} [Sat Mar 16 18:31:28 2024] GET /static/img/%E7%99%BD%E4%BA%91.jpg => generated 179 bytes in 4 msecs (HTTP/1.1 404) 6 headers in 214 bytes (1 switches on core 0)
+SIGINT/SIGTERM received...killing workers...
+gateway "uWSGI http 1" has been buried (pid: 12697)
+worker 1 buried after 6 seconds
+goodbye to uWSGI.
+*** Starting uWSGI 2.0.24 (64bit) on [Sat Mar 16 21:28:48 2024] ***
+compiled with version: 11.4.0 on 16 March 2024 10:13:36
+os: Linux-6.5.0-25-generic #25~22.04.1-Ubuntu SMP PREEMPT_DYNAMIC Tue Feb 20 16:09:15 UTC 2
+nodename: quyang-virtual-machine
+machine: x86_64
+clock source: unix
+pcre jit disabled
+detected number of CPU cores: 2
+current working directory: /mnt/hgfs/Communist/Communist
+writing pidfile to uwsgi.pid
+detected binary path: /home/quyang/Python-3.10.11/django/bin/uwsgi
+chdir() to /mnt/hgfs/Communist
+your processes number limit is 7390
+your memory page size is 4096 bytes
+detected max file descriptor number: 1048576
+lock engine: pthread robust mutexes
+thunder lock: disabled (you can enable it with --thunder-lock)
+uwsgi socket 0 bound to TCP address 127.0.0.1:8000 fd 3
+Python version: 3.10.12 (main, Nov 20 2023, 15:14:05) [GCC 11.4.0]
+Python main interpreter initialized at 0x5839a7fe20c0
+python threads support enabled
+your server socket listen backlog is limited to 100 connections
+your mercy for graceful operations on workers is 60 seconds
+mapped 166752 bytes (162 KB) for 2 cores
+*** Operational MODE: threaded ***
+WSGI app 0 (mountpoint='') ready in 4 seconds on interpreter 0x5839a7fe20c0 pid: 14792 (default app)
+*** uWSGI is running in multiple interpreter mode ***
+spawned uWSGI master process (pid: 14792)
+spawned uWSGI worker 1 (pid: 14810, cores: 2)
+[pid: 14810|app: 0|req: 1/1] 127.0.0.1 () {50 vars in 889 bytes} [Sat Mar 16 21:30:32 2024] GET /login => generated 179 bytes in 479 msecs (HTTP/1.1 404) 6 headers in 214 bytes (1 switches on core 0)
+[pid: 14810|app: 0|req: 2/2] 127.0.0.1 () {54 vars in 972 bytes} [Sat Mar 16 21:30:40 2024] GET / => generated 179 bytes in 2 msecs (HTTP/1.1 404) 6 headers in 214 bytes (1 switches on core 1)
+[pid: 14810|app: 0|req: 3/3] 127.0.0.1 () {50 vars in 891 bytes} [Sat Mar 16 21:31:07 2024] GET /login/ => generated 2918 bytes in 992 msecs (HTTP/1.1 200) 8 headers in 358 bytes (1 switches on core 0)
+[pid: 14810|app: 0|req: 4/4] 127.0.0.1 () {48 vars in 851 bytes} [Sat Mar 16 21:34:10 2024] GET /static/img/xgkx_blue2.png => generated 179 bytes in 4 msecs (HTTP/1.1 404) 6 headers in 214 bytes (1 switches on core 1)
+[pid: 14810|app: 0|req: 5/5] 127.0.0.1 () {48 vars in 855 bytes} [Sat Mar 16 21:34:11 2024] GET /static/img/%E7%99%BD%E4%BA%91.jpg => generated 179 bytes in 4 msecs (HTTP/1.1 404) 6 headers in 214 bytes (1 switches on core 0)
+[pid: 14810|app: 0|req: 6/6] 127.0.0.1 () {48 vars in 851 bytes} [Sat Mar 16 21:34:11 2024] GET /static/img/xgkx_blue2.png => generated 179 bytes in 5 msecs (HTTP/1.1 404) 6 headers in 214 bytes (1 switches on core 1)
+[pid: 14810|app: 0|req: 7/7] 127.0.0.1 () {50 vars in 891 bytes} [Sat Mar 16 22:11:25 2024] GET /login/ => generated 2918 bytes in 2335 msecs (HTTP/1.1 200) 8 headers in 358 bytes (1 switches on core 0)
+[pid: 14810|app: 0|req: 8/8] 127.0.0.1 () {58 vars in 1085 bytes} [Sat Mar 16 22:15:22 2024] POST /login/ => generated 1744 bytes in 771 msecs (HTTP/1.1 200) 8 headers in 367 bytes (1 switches on core 1)
+[pid: 14810|app: 0|req: 9/9] 127.0.0.1 () {50 vars in 891 bytes} [Sat Mar 16 22:16:15 2024] GET /login/ => generated 2918 bytes in 58 msecs (HTTP/1.1 200) 8 headers in 358 bytes (1 switches on core 0)
+[pid: 14810|app: 0|req: 10/10] 127.0.0.1 () {50 vars in 891 bytes} [Sat Mar 16 22:22:02 2024] GET /login/ => generated 2918 bytes in 93 msecs (HTTP/1.1 200) 8 headers in 358 bytes (1 switches on core 1)
+[pid: 14810|app: 0|req: 11/11] 127.0.0.1 () {50 vars in 891 bytes} [Sat Mar 16 22:27:40 2024] GET /login/ => generated 2918 bytes in 45 msecs (HTTP/1.1 200) 8 headers in 358 bytes (1 switches on core 0)
+[pid: 14810|app: 0|req: 12/12] 127.0.0.1 () {58 vars in 1085 bytes} [Sat Mar 16 22:45:15 2024] POST /login/ => generated 1744 bytes in 539 msecs (HTTP/1.1 200) 8 headers in 367 bytes (1 switches on core 1)

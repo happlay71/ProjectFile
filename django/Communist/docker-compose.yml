@@ -1,0 +1,23 @@
+version: '3'
+
+services:
+  web:
+    build: .
+    command: python manage.py runserver 0.0.0.0:8000
+    volumes:
+      - .:/code
+    ports:
+      - "8000:8000"
+    environment:
+      - DJANGO_SETTINGS_MODULE=communist.settings
+      - DATABASE_URL=mysql://root:547118@db:3306/communist
+
+  db:
+    image: mysql
+    environment:
+      - MYSQL_DATABASE=communist
+      - MYSQL_USER=root
+      - MYSQL_PASSWORD=547118
+      - MYSQL_ROOT_PASSWORD=547118
+    ports:
+      - "3306:3306"

@@ -1,0 +1,63 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>查询结果</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 0;
+            padding: 0;
+            background-color: #f0f0f0;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            background-image: url("/static/img/白云.jpg"), url("/static/img/xgkx_blue2.png");
+            background-size: cover;
+        }
+        .new-image {
+            position: absolute; /* 让新图片相对于容器进行绝对定位 */
+            bottom: 0; /* 将新图片粘贴到容器底部 */
+            left: 45%; /* 可以根据需要设置新图片的水平位置 */
+            width: 10%; /* 设置新图片的宽度占据整个容器 */
+            z-index: 1; /* 确保新图片位于旧图片上方 */
+        }
+        .container {
+            background-color: #fff;
+            border-radius: 10px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+            padding: 20px;
+            text-align: center;
+        }
+        h1 {
+            color: #333;
+        }
+        p {
+            color: #666;
+            margin-top: 20px;
+        }
+        .success {
+            color: green;
+        }
+        .failure {
+            color: red;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>查询结果</h1>
+        <p>{{ name }} 同学</p>
+        {% if communist %}
+            <p class="success">已提交入党申请书</p>
+        {% else %}
+            <p class="failure">未提交入党申请书</p>
+        {% endif %}
+        <img src="/static/img/xgkx_blue2.png" alt="New Image" class="new-image">
+    </div>
+</body>
+</html>
+
+

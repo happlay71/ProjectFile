@@ -1,0 +1,27 @@
+15:17:02:644  INFO 12388 --- [main] com.hmall.cart.CartApplication           : Starting CartApplication using Java 11.0.23 on quyang with PID 12388 (E:\E\桌面\SpringCloud\hmall\cart-service\target\classes started by huyang in E:\E\桌面\SpringCloud\hmall)
+15:17:02:645 DEBUG 12388 --- [main] com.hmall.cart.CartApplication           : Running with Spring Boot v2.7.12, Spring v5.3.27
+15:17:02:646  INFO 12388 --- [main] com.hmall.cart.CartApplication           : The following 1 profile is active: "local"
+15:17:03:160  INFO 12388 --- [main] .s.d.r.c.RepositoryConfigurationDelegate : Multiple Spring Data modules found, entering strict repository configuration mode
+15:17:03:162  INFO 12388 --- [main] .s.d.r.c.RepositoryConfigurationDelegate : Bootstrapping Spring Data Redis repositories in DEFAULT mode.
+15:17:03:180  INFO 12388 --- [main] .s.d.r.c.RepositoryConfigurationDelegate : Finished Spring Data repository scanning in 5 ms. Found 0 Redis repository interfaces.
+15:17:03:566  INFO 12388 --- [main] o.s.b.w.embedded.tomcat.TomcatWebServer  : Tomcat initialized with port(s): 8082 (http)
+15:17:03:574  INFO 12388 --- [main] o.apache.catalina.core.StandardService   : Starting service [Tomcat]
+15:17:03:574  INFO 12388 --- [main] org.apache.catalina.core.StandardEngine  : Starting Servlet engine: [Apache Tomcat/9.0.75]
+15:17:03:663  INFO 12388 --- [main] o.a.c.c.C.[Tomcat].[localhost].[/]       : Initializing Spring embedded WebApplicationContext
+15:17:03:663  INFO 12388 --- [main] w.s.c.ServletWebServerApplicationContext : Root WebApplicationContext: initialization completed in 988 ms
+15:17:04:767  INFO 12388 --- [main] pertySourcedRequestMappingHandlerMapping : Mapped URL path [/v2/api-docs] onto method [springfox.documentation.swagger2.web.Swagger2ControllerWebMvc#getDocumentation(String, HttpServletRequest)]
+15:17:05:045  INFO 12388 --- [main] o.s.b.w.embedded.tomcat.TomcatWebServer  : Tomcat started on port(s): 8082 (http) with context path ''
+15:17:05:046  INFO 12388 --- [main] d.s.w.p.DocumentationPluginsBootstrapper : Documentation plugins bootstrapped
+15:17:05:048  INFO 12388 --- [main] d.s.w.p.DocumentationPluginsBootstrapper : Found 1 custom documentation plugin(s)
+15:17:05:061  INFO 12388 --- [main] s.d.s.w.s.ApiListingReferenceScanner     : Scanning for api listing references
+15:17:05:121  INFO 12388 --- [main] com.hmall.cart.CartApplication           : Started CartApplication in 2.832 seconds (JVM running for 3.634)
+15:17:09:962  INFO 12388 --- [http-nio-8082-exec-1] o.a.c.c.C.[Tomcat].[localhost].[/]       : Initializing Spring DispatcherServlet 'dispatcherServlet'
+15:17:09:964  INFO 12388 --- [http-nio-8082-exec-1] o.s.web.servlet.DispatcherServlet        : Initializing Servlet 'dispatcherServlet'
+15:17:09:965  INFO 12388 --- [http-nio-8082-exec-1] o.s.web.servlet.DispatcherServlet        : Completed initialization in 1 ms
+15:17:23:944  INFO 12388 --- [http-nio-8082-exec-2] com.zaxxer.hikari.HikariDataSource       : HikariPool-1 - Starting...
+15:17:24:288  INFO 12388 --- [http-nio-8082-exec-2] com.zaxxer.hikari.HikariDataSource       : HikariPool-1 - Start completed.
+15:17:24:293 DEBUG 12388 --- [http-nio-8082-exec-2] c.h.cart.mapper.CartMapper.selectList    : ==>  Preparing: SELECT id,user_id,item_id,num,name,spec,price,image,create_time,update_time FROM cart WHERE (user_id = ?)
+15:17:24:311 DEBUG 12388 --- [http-nio-8082-exec-2] c.h.cart.mapper.CartMapper.selectList    : ==> Parameters: 1(Long)
+15:17:24:330 DEBUG 12388 --- [http-nio-8082-exec-2] c.h.cart.mapper.CartMapper.selectList    : <==      Total: 1
+15:20:51:281  INFO 12388 --- [SpringApplicationShutdownHook] com.zaxxer.hikari.HikariDataSource       : HikariPool-1 - Shutdown initiated...
+15:20:51:300  INFO 12388 --- [SpringApplicationShutdownHook] com.zaxxer.hikari.HikariDataSource       : HikariPool-1 - Shutdown completed.

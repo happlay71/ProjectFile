@@ -11,7 +11,7 @@ import org.springframework.context.annotation.Bean;
 import org.springframework.web.client.RestTemplate;
 
 @MapperScan("com.hmall.cart.mapper")
-@EnableFeignClients(clients = {ItemClient.class}, defaultConfiguration = DefaultFeignConfig.class)
+@EnableFeignClients(basePackages = "com.hmall.api.client", defaultConfiguration = DefaultFeignConfig.class)
 @SpringBootApplication
 public class CartApplication {
     public static void main(String[] args) {

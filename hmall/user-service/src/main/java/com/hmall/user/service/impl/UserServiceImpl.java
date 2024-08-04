@@ -1,7 +1,6 @@
 package com.hmall.user.service.impl;
 
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
-import com.hmall.api.enums.UserStatus;
 import com.hmall.common.exception.BadRequestException;
 import com.hmall.common.exception.BizIllegalException;
 import com.hmall.common.exception.ForbiddenException;
@@ -10,6 +9,7 @@ import com.hmall.user.config.JwtProperties;
 import com.hmall.user.domain.dto.LoginFormDTO;
 import com.hmall.user.domain.po.User;
 import com.hmall.user.domain.vo.UserLoginVO;
+import com.hmall.user.enums.UserStatus;
 import com.hmall.user.mapper.UserMapper;
 import com.hmall.user.service.IUserService;
 import com.hmall.user.utils.JwtTool;

@@ -1,8 +1,8 @@
 server:
   port: 8081
-feign:
-  okhttp:
-    enabled: true
+#feign:
+#  okhttp:
+#    enabled: true
 
 hm:
   db:

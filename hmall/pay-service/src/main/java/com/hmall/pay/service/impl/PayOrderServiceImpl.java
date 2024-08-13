@@ -68,11 +68,12 @@ public class PayOrderServiceImpl extends ServiceImpl<PayOrderMapper, PayOrder> i
             throw new BizIllegalException("交易已支付或关闭！");
         }
         // 5.修改订单状态
-        try {
-            rabbitTemplate.convertAndSend("pay.direct", "pay.success", po.getBizOrderNo());
-        } catch (AmqpException e) {
-            log.error("支付成功的消息发送失败，支付单id：{}， 交易单id：{}", po.getId(), po.getBizOrderNo(), e);
-        }
+//        try {
+//            rabbitTemplate.convertAndSend("pay.direct", "pay.success", po.getBizOrderNo());
+//        } catch (AmqpException e) {
+//            log.error("支付成功的消息发送失败，支付单id：{}， 交易单id：{}", po.getId(), po.getBizOrderNo(), e);
+//        }
+
 //        tradeClient.markOrderPaySuccess(po.getBizOrderNo());
 
 //        Order order = new Order();
@@ -80,6 +81,14 @@ public class PayOrderServiceImpl extends ServiceImpl<PayOrderMapper, PayOrder> i
 //        order.setStatus(2);
 //        order.setPayTime(LocalDateTime.now());
 //        tradeClient.updateById(order);
+    }
+
+    @Override
+    public void cancelPayOrderByBizOrderNo(Long orderId) {
+        PayOrder payOrder = queryByBizOrderNo(orderId);
+        payOrder.setStatus(2);
+        payOrder.setUpdateTime(LocalDateTime.now());
+        this.updateById(payOrder);
     }
 
     public boolean markPayOrderSuccess(Long id, LocalDateTime successTime) {

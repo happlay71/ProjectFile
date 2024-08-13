@@ -3,13 +3,16 @@ package com.hmall.trade.service.impl;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
 import com.hmall.api.client.CartClient;
 import com.hmall.api.client.ItemClient;
+import com.hmall.api.client.PayClient;
 import com.hmall.api.dto.ItemDTO;
 import com.hmall.api.dto.OrderDetailDTO;
 import com.hmall.api.dto.OrderFormDTO;
 import com.hmall.common.exception.BadRequestException;
+import com.hmall.common.utils.CustomMPPUtils;
 import com.hmall.common.utils.UserContext;
 //import com.hmall.trade.domain.dto.OrderDetailDTO;
 //import com.hmall.trade.domain.dto.OrderFormDTO;
+import com.hmall.trade.constants.MQConstants;
 import com.hmall.trade.domain.po.Order;
 import com.hmall.trade.domain.po.OrderDetail;
 import com.hmall.trade.mapper.OrderMapper;
@@ -27,11 +30,11 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.time.LocalDateTime;
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Map;
-import java.util.Set;
+import java.util.*;
 import java.util.stream.Collectors;
+
+import static com.hmall.trade.constants.MQConstants.DELAY_EXCHANGE_NAME;
+import static com.hmall.trade.constants.MQConstants.DELAY_ORDER_KEY;
 
 /**
  * <p>
@@ -45,11 +48,13 @@ import java.util.stream.Collectors;
 @RequiredArgsConstructor
 public class OrderServiceImpl extends ServiceImpl<OrderMapper, Order> implements IOrderService {
 
-//    private final IItemService itemService;
     private final ItemClient itemClient;
+
     private final IOrderDetailService detailService;
-//    private final ICartService cartService;
+
     private final CartClient cartClient;
+
+    private final PayClient payClient;
 
     private final RabbitTemplate rabbitTemplate;
 
@@ -108,14 +113,32 @@ public class OrderServiceImpl extends ServiceImpl<OrderMapper, Order> implements
         }
 //        cartClient.deleteCartItemByIds(itemIds);
 
-        // 4.扣减库存
+        // 4.扣减库存, 增加销量
+
+        for (ItemDTO item : items) {
+            item.setSold(item.getSold() + itemNumMap.get(item.getId()));
+            itemClient.updateItem(item);
+            System.out.println("销量+1");
+        }
+
         try {
             itemClient.deductStock(detailDTOS);
         } catch (Exception e) {
             throw new RuntimeException("库存不足！");
         }
 
+
+
+
         System.out.println("订单下单成功：" + order.getId());
+
+        // 5.发送延迟消息，检测订单状态
+        rabbitTemplate.convertAndSend(
+                DELAY_EXCHANGE_NAME,
+                DELAY_ORDER_KEY,
+                order.getId(),
+                new CustomMPPUtils(10000));
+
         return order.getId();
     }
 
@@ -126,6 +149,45 @@ public class OrderServiceImpl extends ServiceImpl<OrderMapper, Order> implements
         order.setStatus(2);
         order.setPayTime(LocalDateTime.now());
         updateById(order);
+    }
+
+    @Override
+    public void cancelOrder(Long orderId) {
+        // 标记订单为已关闭
+        Order order = new Order();
+        order.setId(orderId);
+        order.setStatus(5);
+        order.setPayTime(LocalDateTime.now());
+        order.setCloseTime(LocalDateTime.now());
+        updateById(order);
+
+        // 修改支付信息为超时未支付或取消
+        try {
+            payClient.cancelPayOrderByBizOrderNo(orderId);
+        } catch (Exception e) {
+            throw new RuntimeException("未支付订单，状态修改失败", e);
+        }
+
+        // 恢复库存
+        // 1.获取订单中物品id和购买数量
+        List<OrderDetail> orderDetails = detailService.query().eq("order_Id", orderId).list();
+//        List<Map<Long, Integer>> items = orderDetails.stream().map(orderDetail -> {
+//            Map<Long, Integer> item = new HashMap<>();
+//            item.put(orderDetail.getItemId(), orderDetail.getNum());
+//            return item;
+//        }).collect(Collectors.toList());
+        //高科技版
+        Map<Long, Integer> items = orderDetails.stream()
+                .collect(Collectors.toMap(OrderDetail::getItemId, OrderDetail::getNum));
+
+        // 2.恢复订单中物品的全部库存
+        Set<Long> itemIds = items.keySet();
+        List<ItemDTO> itemDTOS = itemClient.queryItemByIds(itemIds);
+        for (ItemDTO itemDTO : itemDTOS) {
+            itemDTO.setStock(itemDTO.getStock() + items.get(itemDTO.getId()));
+            itemDTO.setSold(itemDTO.getSold() - items.get(itemDTO.getId()));
+            itemClient.updateItem(itemDTO);
+        }
     }
 
     private List<OrderDetail> buildDetails(Long orderId, List<ItemDTO> items, Map<Long, Integer> numMap) {

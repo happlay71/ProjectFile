@@ -1,23 +1,20 @@
 package com.hmall.trade.service.impl;
 
+import cn.hutool.core.bean.BeanUtil;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
 import com.hmall.api.client.CartClient;
 import com.hmall.api.client.ItemClient;
 import com.hmall.api.client.PayClient;
 import com.hmall.api.dto.ItemDTO;
+import com.hmall.api.dto.ItemDoc;
 import com.hmall.api.dto.OrderDetailDTO;
 import com.hmall.api.dto.OrderFormDTO;
 import com.hmall.common.exception.BadRequestException;
-import com.hmall.common.utils.CustomMPPUtils;
+import com.hmall.common.utils.RabbitMqHelper;
 import com.hmall.common.utils.UserContext;
-//import com.hmall.trade.domain.dto.OrderDetailDTO;
-//import com.hmall.trade.domain.dto.OrderFormDTO;
-import com.hmall.trade.constants.MQConstants;
 import com.hmall.trade.domain.po.Order;
 import com.hmall.trade.domain.po.OrderDetail;
 import com.hmall.trade.mapper.OrderMapper;
-//import com.hmall.trade.service.ICartService;
-//import com.hmall.trade.service.IItemService;
 import com.hmall.trade.service.IOrderDetailService;
 import com.hmall.trade.service.IOrderService;
 import io.seata.spring.annotation.GlobalTransactional;
@@ -27,14 +24,15 @@ import org.springframework.amqp.core.Message;
 import org.springframework.amqp.core.MessagePostProcessor;
 import org.springframework.amqp.rabbit.core.RabbitTemplate;
 import org.springframework.stereotype.Service;
-import org.springframework.transaction.annotation.Transactional;
 
 import java.time.LocalDateTime;
 import java.util.*;
 import java.util.stream.Collectors;
+import java.util.stream.Stream;
 
-import static com.hmall.trade.constants.MQConstants.DELAY_EXCHANGE_NAME;
-import static com.hmall.trade.constants.MQConstants.DELAY_ORDER_KEY;
+import static com.hmall.common.constants.MQConstants.*;
+import static com.hmall.common.constants.MQConstants.ES_UPDATE_SOLD_KEY;
+
 
 /**
  * <p>
@@ -57,6 +55,8 @@ public class OrderServiceImpl extends ServiceImpl<OrderMapper, Order> implements
     private final PayClient payClient;
 
     private final RabbitTemplate rabbitTemplate;
+
+    private final RabbitMqHelper rabbitMqHelper;
 
     @Override
 //    @Transactional
@@ -114,11 +114,28 @@ public class OrderServiceImpl extends ServiceImpl<OrderMapper, Order> implements
 //        cartClient.deleteCartItemByIds(itemIds);
 
         // 4.扣减库存, 增加销量
+        // 修改es销量数据
+        List<ItemDoc> itemDocs = items.stream()
+                .map(item -> {
+                    ItemDoc itemDoc = BeanUtil.copyProperties(item, ItemDoc.class);
+                    itemDoc.setSold(itemDoc.getSold() + itemNumMap.get(item.getId()));
+                    return itemDoc;
+                })
+                .collect(Collectors.toList());
+
+        if (itemDocs.isEmpty()) {
+            throw new RuntimeException("待增加销量的商品id为空");
+        }
+
+        try {
+            rabbitMqHelper.sendMessage(ES_DOC_EXCHANGE_NAME, ES_UPDATE_SOLD_KEY, itemDocs);
+        } catch (Exception e) {
+            throw new RuntimeException("ES增销量消息发送失败", e);
+        }
 
         for (ItemDTO item : items) {
             item.setSold(item.getSold() + itemNumMap.get(item.getId()));
             itemClient.updateItem(item);
-            System.out.println("销量+1");
         }
 
         try {
@@ -133,11 +150,11 @@ public class OrderServiceImpl extends ServiceImpl<OrderMapper, Order> implements
         System.out.println("订单下单成功：" + order.getId());
 
         // 5.发送延迟消息，检测订单状态
-        rabbitTemplate.convertAndSend(
+        rabbitMqHelper.sendDelayMessage(
                 DELAY_EXCHANGE_NAME,
                 DELAY_ORDER_KEY,
                 order.getId(),
-                new CustomMPPUtils(10000));
+                10000);
 
         return order.getId();
     }
@@ -183,6 +200,27 @@ public class OrderServiceImpl extends ServiceImpl<OrderMapper, Order> implements
         // 2.恢复订单中物品的全部库存
         Set<Long> itemIds = items.keySet();
         List<ItemDTO> itemDTOS = itemClient.queryItemByIds(itemIds);
+
+        // 2.1修改es销量数据
+        List<ItemDoc> itemDocs = itemDTOS.stream()
+                .map(item -> {
+                    ItemDoc itemDoc = BeanUtil.copyProperties(item, ItemDoc.class);
+                    itemDoc.setSold(itemDoc.getSold() - items.get(item.getId()));
+                    return itemDoc;
+                })
+                .collect(Collectors.toList());
+
+        if (itemDocs.isEmpty()) {
+            throw new RuntimeException("待减少销量的商品id为空");
+        }
+
+        try {
+            rabbitMqHelper.sendMessage(ES_DOC_EXCHANGE_NAME, ES_UPDATE_SOLD_KEY, itemDocs);
+        } catch (Exception e) {
+            throw new RuntimeException("ES减销量消息发送失败", e);
+        }
+
+        // 2.2修改数据库信息
         for (ItemDTO itemDTO : itemDTOS) {
             itemDTO.setStock(itemDTO.getStock() + items.get(itemDTO.getId()));
             itemDTO.setSold(itemDTO.getSold() - items.get(itemDTO.getId()));

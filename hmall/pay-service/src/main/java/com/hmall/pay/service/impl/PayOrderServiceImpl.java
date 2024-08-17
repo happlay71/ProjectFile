@@ -7,6 +7,7 @@ import com.hmall.api.client.TradeClient;
 import com.hmall.api.client.UserClient;
 import com.hmall.common.exception.BizIllegalException;
 import com.hmall.common.utils.BeanUtils;
+import com.hmall.common.utils.RabbitMqHelper;
 import com.hmall.common.utils.UserContext;
 import com.hmall.pay.domain.dto.PayApplyDTO;
 import com.hmall.pay.domain.dto.PayOrderFormDTO;
@@ -40,7 +41,9 @@ public class PayOrderServiceImpl extends ServiceImpl<PayOrderMapper, PayOrder> i
 
     private final TradeClient tradeClient;
 
-    private final RabbitTemplate rabbitTemplate;
+//    private final RabbitTemplate rabbitTemplate;
+
+    private final RabbitMqHelper rabbitMqHelper;
 
     @Override
     public String applyPayOrder(PayApplyDTO applyDTO) {
@@ -68,11 +71,11 @@ public class PayOrderServiceImpl extends ServiceImpl<PayOrderMapper, PayOrder> i
             throw new BizIllegalException("交易已支付或关闭！");
         }
         // 5.修改订单状态
-//        try {
-//            rabbitTemplate.convertAndSend("pay.direct", "pay.success", po.getBizOrderNo());
-//        } catch (AmqpException e) {
-//            log.error("支付成功的消息发送失败，支付单id：{}， 交易单id：{}", po.getId(), po.getBizOrderNo(), e);
-//        }
+        try {
+            rabbitMqHelper.sendMessage("pay.direct", "pay.success", po.getBizOrderNo());
+        } catch (AmqpException e) {
+            log.error("支付成功的消息发送失败，支付单id：{}， 交易单id：{}", po.getId(), po.getBizOrderNo(), e);
+        }
 
 //        tradeClient.markOrderPaySuccess(po.getBizOrderNo());
 

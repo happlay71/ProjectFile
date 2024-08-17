@@ -2,20 +2,18 @@ package com.hmall.trade.listener;
 
 import com.hmall.api.client.PayClient;
 import com.hmall.api.dto.PayOrderDTO;
-import com.hmall.trade.constants.MQConstants;
 import com.hmall.trade.domain.po.Order;
 import com.hmall.trade.service.IOrderService;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
-import org.springframework.amqp.core.ExchangeTypes;
-import org.springframework.amqp.core.Message;
 import org.springframework.amqp.rabbit.annotation.Exchange;
 import org.springframework.amqp.rabbit.annotation.Queue;
 import org.springframework.amqp.rabbit.annotation.QueueBinding;
 import org.springframework.amqp.rabbit.annotation.RabbitListener;
 import org.springframework.stereotype.Component;
 
-import static com.hmall.trade.constants.MQConstants.*;
+import static com.hmall.common.constants.MQConstants.*;
+
 
 @Slf4j
 @Component

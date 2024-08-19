@@ -24,6 +24,7 @@ import org.springframework.amqp.core.Message;
 import org.springframework.amqp.core.MessagePostProcessor;
 import org.springframework.amqp.rabbit.core.RabbitTemplate;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.time.LocalDateTime;
 import java.util.*;
@@ -59,8 +60,8 @@ public class OrderServiceImpl extends ServiceImpl<OrderMapper, Order> implements
     private final RabbitMqHelper rabbitMqHelper;
 
     @Override
-//    @Transactional
-    @GlobalTransactional
+    @Transactional
+//    @GlobalTransactional
     public Long createOrder(OrderFormDTO orderFormDTO) {
         // 1.订单数据
         Order order = new Order();

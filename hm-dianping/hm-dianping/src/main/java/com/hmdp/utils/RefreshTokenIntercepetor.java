@@ -8,16 +8,15 @@ import org.springframework.web.servlet.HandlerInterceptor;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
-import javax.servlet.http.HttpSession;
 import java.util.Map;
 import java.util.concurrent.TimeUnit;
 
-public class LoginInterceptor implements HandlerInterceptor {
+public class RefreshTokenIntercepetor implements HandlerInterceptor {
 
     // 不是由SpringMVC控制，不能用注解注入
     private StringRedisTemplate stringRedisTemplate;
 
-    public LoginInterceptor(StringRedisTemplate stringRedisTemplate) {
+    public RefreshTokenIntercepetor(StringRedisTemplate stringRedisTemplate) {
         this.stringRedisTemplate = stringRedisTemplate;
     }
 
@@ -27,9 +26,7 @@ public class LoginInterceptor implements HandlerInterceptor {
         String token = request.getHeader("authorization");
 
         if (StrUtil.isBlank(token)) {
-            // 不存在，拦截
-            response.setStatus(401);
-            return false;
+            return true;
         }
         // 2.获取redis中的用户
 //        Object user = session.getAttribute("user");
@@ -38,9 +35,7 @@ public class LoginInterceptor implements HandlerInterceptor {
         Map<Object, Object> userMap = stringRedisTemplate.opsForHash().entries(tokenKey);
         // 3.判断用户是否存在
         if (userMap.isEmpty()) {
-            // 4.不存在，拦截
-            response.setStatus(401);
-            return false;
+            return true;
         }
 
         // 5.将Hash转成userDTO
